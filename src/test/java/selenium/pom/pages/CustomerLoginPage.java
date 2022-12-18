@@ -5,6 +5,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import selenium.pom.base.BaseTest;
 
+import java.util.List;
+
 public class CustomerLoginPage extends BaseTest {
    @FindBy(name = "username")
     WebElement usernameEl;
@@ -12,6 +14,8 @@ public class CustomerLoginPage extends BaseTest {
     WebElement passwordEl;
    @FindBy(css = "input.button")
     WebElement loginBtn;
+   @FindBy(css = ".error")
+    List<WebElement> error;
    public CustomerLoginPage(){
        PageFactory.initElements(driver,this);
    }
@@ -34,6 +38,14 @@ public class CustomerLoginPage extends BaseTest {
 
 
    }
+    public CustomerLoginPage clickLogin(){
+        loginBtn.isDisplayed();
+        loginBtn.click();
+        return this;
+    }
+    public boolean hasErrorMessage(){
+       return error.size()>0;
+    }
 
 
 }

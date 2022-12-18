@@ -28,6 +28,22 @@ public class CustomerLoginTest extends BaseTest {
         Assert.assertTrue(landingPage.isLogoutLink());
 
     }
+    @Test
+    public void loginWithUsernameShoulFailed(){
+       customerLoginPage = customerLoginPage
+                .fillUsername(getUsername())
+                .clickLogin();
+        Assert.assertTrue(customerLoginPage.hasErrorMessage());
+
+    }
+    @Test
+    public void loginWithUserPasswordShoulFailed(){
+        customerLoginPage = customerLoginPage
+                .fillPassword(getPassword())
+                .clickLogin();
+        Assert.assertTrue(customerLoginPage.hasErrorMessage());
+
+    }
     @AfterMethod
     public void tearDown(){
         driver.quit();
