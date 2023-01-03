@@ -46,6 +46,13 @@ public class CustomerLoginPage extends BaseTest {
     public boolean hasErrorMessage(){
        return error.size()>0;
     }
+    public LandingPage login(String username,String password){
+       fillUsername(username);
+       fillPassword(password);
+       clickLogin();
+       return new LandingPage();
+
+    }
 
 
 }

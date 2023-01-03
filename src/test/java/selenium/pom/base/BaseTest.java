@@ -1,10 +1,14 @@
 package selenium.pom.base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import selenium.pom.util.GeneralUtil;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -31,7 +35,8 @@ public class BaseTest {
 
 
     }
-    public void browserSetup(){
+
+    public void browserSetup() {
         WebDriverManager.firefoxdriver().setup();
         driver = new FirefoxDriver();
         driver.manage().window().maximize();
@@ -39,14 +44,25 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GeneralUtil.PAGE_LOAD_TIME));
 
     }
-    public String getUsername(){
+
+    public String getUsername() {
         return properties.getProperty("paraBank.username");
 
     }
-    public String getPassword(){
+
+    public String getPassword() {
         return properties.getProperty("paraBank.password");
     }
 
+    public static void takeScreenshot(String testCaseName) {
+        try {
+            File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            String currentDir = System.getProperty("user.dir") + "/build/screenshots/";
+            FileUtils.copyFile(scrFile, new File(currentDir + testCaseName + System.currentTimeMillis() + ".png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 }
